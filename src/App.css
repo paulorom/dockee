@@ -1,3 +1,10 @@
 .App {
-  text-align: center;
+  height: 100vh;
+  width: 100%;
+  background: red;
+  cursor: crosshair;
+}
+.note {
+  position: absolute;
+  background: yellow;
 }
