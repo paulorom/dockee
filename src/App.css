@@ -1,10 +1,90 @@
 .App {
   height: 100vh;
   width: 100%;
-  background: red;
+  background: #337abe;
   cursor: crosshair;
 }
+
 .note {
   position: absolute;
-  background: yellow;
+  font-size: 12px;
+  box-shadow: 5px 5px 5px rgba(0,0,0, 0.1);
+  display: block;
+  cursor: move;
+  border-radius: 3px;
+  background: #ebecf0;
+  box-sizing: border-box;
+  padding: 8px;
 }
+
+.note-header {
+  height: 20px;
+}
+
+.note textarea {
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 3px;
+  background: #ebecf0;
+}
+
+.note textarea:focus-visible {
+  outline: 0;
+}
+
+.color-picker {
+  height: 20px;
+  width: 80px;
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  display: flex;
+}
+
+.circle {
+  height: 12px;
+  margin: 0 3px;
+  width: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.red {
+  background: #f2bbc0;
+}
+
+.yellow {
+  background: #e5e047;
+}
+
+.green {
+  background: #b2d94a;
+}
+
+.fallback {
+  display: none;
+}
+
+@media screen and (max-width: 1024px){
+  .notes-list {
+    display: none;
+  }
+
+  .fallback {
+    display: block;
+    margin: 0;
+    padding: 8px;
+    color: #fff;
+  }
+}
+
+.tip {
+  padding: 8px;
+  color: #fff;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+

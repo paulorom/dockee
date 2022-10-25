@@ -10,33 +10,43 @@ const App: React.FC = () => {
   const [height, setHeight] = useState<number>(150);
   const [width, setWidth] = useState<number>(150);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>("Use the cursor of the mouse to create new notes");
-  const [background, setBackground] = useState<string>("white");
-  const [layer, setLayer] = useState<number>(0);
-
+  const [description, setDescription] = useState<string>("This is a new note, you can edit it by clicking here.");
+  const [background, setBackground] = useState<string>("");
+  const [layer, setLayer] = useState<number>(1);
   const [notes, setNotes] = useState<INote[]>([]);
 
-  useEffect(() => {
-    addNote();
-  }, [height]);
+  const [isMouseOverNote, setIsMouseOverNote] = useState<boolean>(false);
 
   const onAppMouseDown = (event: React.MouseEvent<HTMLElement>): void => {
-    setLeft(event.pageX)
-    setTop(event.pageY)
+    setLeft(event.pageX);
+    setTop(event.pageY);
   }
 
   const onAppMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-
-  }
-
-  const onAppMouseUp = (event: React.MouseEvent<HTMLElement>) => {
     setHeight(event.pageY - top)
     setWidth(event.pageX - left)
   }
 
+  const onAppMouseUp = (event: React.MouseEvent<HTMLElement>) => {
+    setHeight(event.pageY - top);
+    setWidth(event.pageX - left);
+    let newLayer = layer + 1;
+    setLayer(newLayer)
+    if(!isMouseOverNote)
+      addNote();
+  }
+
+  const onNoteMouseOver = (event: React.MouseEvent<HTMLElement>) => {
+    setIsMouseOverNote(true)
+  }
+
+  const onNoteMouseOut = (event: React.MouseEvent<HTMLElement>) => {
+    setIsMouseOverNote(false)
+  }
+
   const addNote = (): void => {
-    const newNote = { 
-      id: 0, 
+    const newNote = {
+      id: id + 1,
       top: top,
       left: left,
       width: width,
@@ -47,13 +57,12 @@ const App: React.FC = () => {
       layer: layer
     };
     setNotes([...notes, newNote]);
-    setBackground("yellow")
   };
 
   const deleteNote = (noteIDToDelete: number): void => {
     setNotes(
       notes.filter((note) => {
-        return note.id != id;
+        return note.id !== id;
       })
     );
   };
@@ -64,11 +73,13 @@ const App: React.FC = () => {
       onMouseMove={onAppMouseMove}
       onMouseUp={onAppMouseUp}
     >
-
-      {notes.map((note: INote, key: number) => {
-        return <Note key={key} note={note} deleteNote={deleteNote} />;
-      })}
-
+      <p className="fallback">You should use a screen greater that 1024px to use Sticky Notes</p>
+      <p className="tip">Add a Note by drawing it on the blue screen, you should press the left mouse button</p>
+      <div className="notes-list" onMouseOver={onNoteMouseOver} onMouseOut={onNoteMouseOut}>
+        {notes.map((note: INote, key: number) => {
+          return <Note key={key} note={note} deleteNote={deleteNote} />;
+        })}
+      </div>    
     </div>
   );
 }
