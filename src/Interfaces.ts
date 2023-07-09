@@ -8,4 +8,4 @@ export interface INote {
     description: string;
     background: string;
     layer: number;
-}  
+}

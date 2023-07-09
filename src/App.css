@@ -19,6 +19,8 @@
 
 .note-header {
   height: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .note textarea {
@@ -35,8 +37,6 @@
 
 .color-picker {
   height: 20px;
-  width: 80px;
-  position: absolute;
   left: 5px;
   right: 5px;
   display: flex;

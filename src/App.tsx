@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Note from "./Components/Note";
-import { INote } from "./Interfaces"
+import { INote } from "./interfaces"
 import './App.css';
 
 const App: React.FC = () => {
-  const [id, setID] = useState<number>(1);
+  const [id, setID] = useState<number>(0);
   const [top, setTop] = useState<number>(20);
   const [left, setLeft] = useState<number>(20);
   const [height, setHeight] = useState<number>(150);
@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
   const addNote = (): void => {
     const newNote = {
-      id: id + 1,
+      id: id,
       top: top,
       left: left,
       width: width,
@@ -56,13 +56,17 @@ const App: React.FC = () => {
       description: description,
       layer: layer
     };
+    setID(id+1)
+    console.log(newNote)
     setNotes([...notes, newNote]);
   };
 
   const deleteNote = (noteIDToDelete: number): void => {
+    console.log(noteIDToDelete)
     setNotes(
       notes.filter((note) => {
-        return note.id !== id;
+        console.log(noteIDToDelete)
+        return note.id !== noteIDToDelete;
       })
     );
   };
@@ -77,7 +81,7 @@ const App: React.FC = () => {
       <p className="tip">Add a Note by drawing it on the blue screen, you should press the left mouse button</p>
       <div className="notes-list" onMouseOver={onNoteMouseOver} onMouseOut={onNoteMouseOut}>
         {notes.map((note: INote, key: number) => {
-          return <Note key={key} note={note} deleteNote={deleteNote} />;
+          return <Note key={note.id} note={note} deleteNote={deleteNote} />;
         })}
       </div>    
     </div>
