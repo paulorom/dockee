@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
-import { INote } from "../interfaces";
+import { INote } from "../Interfaces";
 
 interface Props {
     note: INote;

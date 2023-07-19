@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Note from "./Components/Note";
-import { INote } from "./interfaces"
+import { INote } from "./Interfaces"
 import './App.css';
 
 const App: React.FC = () => {
