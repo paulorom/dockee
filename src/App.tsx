@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import netlifyIdentity from 'netlify-identity-widget';
+import LogoutButton from './Components/LogoutButton';
 import Note from "./Components/Note";
 import { INote } from "./Interfaces"
 import './App.css';
@@ -14,8 +16,16 @@ const App: React.FC = () => {
   const [background, setBackground] = useState<string>("");
   const [layer, setLayer] = useState<number>(1);
   const [notes, setNotes] = useState<INote[]>([]);
-
   const [isMouseOverNote, setIsMouseOverNote] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Initialize Netlify Identity
+    netlifyIdentity.init();
+    const user = netlifyIdentity.currentUser();
+    console.log(user)
+  }, []);
+
+
 
   const onAppMouseDown = (event: React.MouseEvent<HTMLElement>): void => {
     setLeft(event.pageX);
@@ -77,6 +87,8 @@ const App: React.FC = () => {
       onMouseMove={onAppMouseMove}
       onMouseUp={onAppMouseUp}
     >
+      <button onClick={() => netlifyIdentity.open('login')}>Log In</button>
+      <LogoutButton />
       <p className="fallback">You should use a screen greater that 1024px to use Sticky Notes</p>
       <p className="tip">Add a Note by drawing it on the blue screen, you should press the left mouse button</p>
       <div className="notes-list" onMouseOver={onNoteMouseOver} onMouseOut={onNoteMouseOut}>
